@@ -2,7 +2,7 @@
 
 ## The team
 
-- Foo bar: email1
-- bar bar: email2
+- Foo bar: bo_licc@hotmail.com
+- bar bar: liuyiyi147@gmail.com
 
 ## Comments
