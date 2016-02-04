@@ -16,6 +16,7 @@ public class VmAllocationPolicyFactory {
      * @param hosts the host list
      * @return the selected algorithm
      */
+	
     VmAllocationPolicy make(String id, List<PowerHost> hosts) {
 
         switch (id) {
