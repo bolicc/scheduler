@@ -2,7 +2,10 @@
 
 ## The team
 
-- Foo bar: bo_licc@hotmail.com
-- bar bar: liuyiyi147@gmail.com
+- Bo Li: bo_licc@hotmail.com
+- Siqi Li: liuyiyi147@gmail.com
 
 ## Comments
+### A naive scheduler to start
+### Support for Highly-Available applications
+### Balance the load

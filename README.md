@@ -1,5 +1,5 @@
 # Vicc project: homemade VM Schedulers
-# Bo Li
+### by Bo Li & Siqi Li
 This project aims at developing different Vm schedulers for a given IaaS cloud. Each scheduler will have meaningful properties for either the cloud customers or the cloud provider.
 
 The implementation and the evaluation will be made over the IaaS cloud simulator [CloudSim](http://www.cloudbus.org/cloudsim/). The simulator will replay a workload extracted from Emulab, on a datacenter having realistic characteristics. 
@@ -10,7 +10,7 @@ Some usefull resources:
 - CloudSim [API](http://www.cloudbus.org/cloudsim/doc/api/index.html)
 - CloudSim [source code](cloudsim-3.0.3-src.tar.gz)
 - CloudSim [mailing-list](https://groups.google.com/forum/#!forum/cloudsim)
-- 
+ 
 ## Setting up the environment
 
 You must have a working Java 7 + [maven](http://maven.apache.org) environment to develop and Git to manage the sources. No IDE is necessary but feel free to use it.
