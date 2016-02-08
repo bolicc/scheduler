@@ -10,7 +10,7 @@ import org.cloudbus.cloudsim.power.PowerHost;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+//compile exec:java -Dsched=naive -Dday=all
 
 /**
  * Created by fhermeni2 on 16/11/2015.

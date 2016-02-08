@@ -23,6 +23,7 @@ public class VmAllocationPolicyFactory {
             case "naive":  return new NaiveVmAllocationPolicy(hosts);
             case "antiAffinity":  return new antiAffinityVmAllocationPolicy(hosts);
             case "nextFit": return new NextFitVmAllocationPolicy(hosts);
+            case "worstFit": return new WorstFitVmAllocationPolicy(hosts);
         }
         throw new IllegalArgumentException("No such policy '" + id + "'");
     }
