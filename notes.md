@@ -21,12 +21,14 @@ No SLA violations means no penalties. To allocate a certain VM, we need to consi
 
 ### Results
 Test different schedulers running on `all` day, the results are as follow.
-
-	Schedulers	Incomes	Penalties	Energy	Revenue
-	Naive	12398.59€	402.16€	2645.63€	9350.80€
-	AntiAffinity
-	NextFit
-	WorstFit	12398.59€	6.06€	3288.96€	9103.58€
-	NoViolations	12398.59€	0.00€	2868.74€	9529.85€
-	EnergyEfficient
+	
+	Schedulers      |  Incomes  | Penalties |  Energy  | Revenue
+	----------------|-----------|-----------|----------|----------
+	Naive           | 12398.59€ | 402.16€	| 2645.63€ | 9350.80€
+	AntiAffinity    |           |           |          |
+	NextFit         |           |           |          |
+	WorstFit	    | 12398.59€ | 6.06€	    | 3288.96€ | 9103.58€
+	NoViolations    | 12398.59€ | 0.00€	    | 2868.74€ | 9529.85€
+	EnergyEfficient |           |           |          |
+	
 	
