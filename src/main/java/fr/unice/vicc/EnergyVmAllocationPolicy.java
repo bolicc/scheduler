@@ -34,15 +34,36 @@ public class EnergyVmAllocationPolicy extends VmAllocationPolicy {
         return null;
     }
 
+    
     @Override
     public boolean allocateHostForVm(Vm vm) {    	
-    	for (Host h : getHostList()){ 		
-    		Double mip = h.getAvailableMips();
-    		Double metric = 0.0;
-    		if(mip >= 0){
-    			metric=mip;
+
+    	/* Choose min{MIPS} as metric */
+//    	for (Host h : getHostList()){ 		
+//    		Double mips = h.getAvailableMips();
+//    		Double metric = 0.0;
+//    		if(mips >= 0){
+//    			metric = mips;
+//    			pelister.put(h,metric);
+//    		}
+//    	}
+    	
+    	/* Choose min{MIPS*RAM} as metric */
+//    	for (Host h : getHostList()){
+//    		Double mips = h.getAvailableMips();		
+//    		Integer ram = h.getRamProvisioner().getAvailableRam();
+//    		Double metric = mips*ram;
+//    		pelister.put(h,metric);
+//    	}
+    	
+    	/* Choose min{host_MIPS - vm_MIPS} as metric */
+    	for (Host h : getHostList()){
+    		Double host_mips = h.getAvailableMips();	
+    		Double vm_mips = vm.getMips();
+    		if(host_mips >= vm_mips){
+    			Double metric = host_mips - vm_mips;
     			pelister.put(h,metric);
-    		}
+    		}  		
     	}
     	
     	List<Map.Entry<Host,Double>> list=new ArrayList<>();  
@@ -59,7 +80,7 @@ public class EnergyVmAllocationPolicy extends VmAllocationPolicy {
    
     @Override
     public boolean allocateHostForVm(Vm vm, Host host) {
-    	if (host!=null&&host.vmCreate(vm)){
+    	if (host!=null && host.vmCreate(vm)){
     		hoster.put(vm, host);
     		/*Log.formatLine("%.4f: VM #" + vm.getId() + " has been allocated to the host#" + host.getId() + 
 					" datacenter #" + host.getDatacenter().getId() + "(" + host.getDatacenter().getName() + ") #", 
@@ -82,13 +103,13 @@ public class EnergyVmAllocationPolicy extends VmAllocationPolicy {
 
     @Override
     public Host getHost(int vmId, int userId) {
-    	Host host=null;
-    	for(Map.Entry<Vm, Host> entry: hoster.entrySet()){
-    		Vm vm=entry.getKey();
-    	if((vm.getUserId()==userId)&&(vm.getId()==vmId)){
-    	    	 host= hoster.get(vm);
-    	    	}
-    	     }
+    	Host host = null;
+    	for(Map.Entry<Vm, Host> entry : hoster.entrySet()){
+    		Vm vm = entry.getKey();
+    		if((vm.getUserId()==userId) && (vm.getId()==vmId)){
+    			host= hoster.get(vm);
+    	    }
+    	}
 		return host;
     }
     
