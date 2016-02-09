@@ -18,10 +18,11 @@ import java.util.Map;
 public class NextFitVmAllocationPolicy extends VmAllocationPolicy {
     /** The map to track the server that host each running VM. */
     private Map<Vm,Host> hoster;
+    public static int i = 0; 
 
     public NextFitVmAllocationPolicy(List<? extends Host> list) {
         super(list);
-        hoster =new HashMap<>();
+        hoster = new HashMap<>();
     }
 
     @Override
@@ -34,7 +35,7 @@ public class NextFitVmAllocationPolicy extends VmAllocationPolicy {
     public List<Map<String, Object>> optimizeAllocation(List<? extends Vm> list) {
         return null;
     }
-    public static int i = 0; 
+    
     @Override
     public boolean allocateHostForVm(Vm vm) { 
     	if (hoster.containsKey(vm))
@@ -46,39 +47,34 @@ public class NextFitVmAllocationPolicy extends VmAllocationPolicy {
     		if(i==(getHostList().size()-1)){
         		i=0;
         	}
-    		Host h=getHostList().get(i);
+    		Host h = getHostList().get(i);
     		
     		//System.out.println("i value"+i+"host ID"+h.getId());
-    		if (h!=null&&h.vmCreate(vm)){
+    		if (h!=null && h.vmCreate(vm)){
     			hoster.put(vm, h);
     			//System.out.println("host ID : " + h.getId() + " vm ID : " + vm.getId());
     			//System.out.println("    current search host"+i);
     			Log.formatLine("%.4f: VM #" + vm.getId() + " has been allocated to the host#" + h.getId() + 
     					" datacenter #" + h.getDatacenter().getId() + "(" + h.getDatacenter().getName() + ") #", 
     					CloudSim.clock());
-    			return true;
-    			
-    	   }
-    	   		
+    			return true;  			
+    		}   		
     		else{
     			i++;
     		}
-    	}
-    	
-    		return false;
-    	}
-    	
+    	} 	
+    	return false;
+    }  	
    
 	@Override
     public boolean allocateHostForVm(Vm vm, Host host) {
-    	if (host!=null&&host.vmCreate(vm)){
+    	if (host!=null && host.vmCreate(vm)){
     		hoster.put(vm, host);
     		//System.out.println("host ID : " + host.getId() + " vm ID : " + vm.getId());
     		Log.formatLine("%.4f: VM #" + vm.getId() + " has been allocated to the host#" + host.getId() + 
 					" datacenter #" + host.getDatacenter().getId() + "(" + host.getDatacenter().getName() + ") #", 
 					CloudSim.clock());
-    		return true;
-    		
+    		return true;  		
     	}
         return false;
     }
@@ -97,13 +93,12 @@ public class NextFitVmAllocationPolicy extends VmAllocationPolicy {
     @Override
     public Host getHost(int vmId, int userId) {//if id and userid of vm is the same to input
     	Host host=null;
-    	for(Map.Entry<Vm, Host> entry: hoster.entrySet()){
+    	for(Map.Entry<Vm, Host> entry : hoster.entrySet()){
     		Vm vm=entry.getKey();
-    	if((vm.getUserId()==userId)&&(vm.getId()==vmId)){
-    	    	 host= hoster.get(vm);
-    	    	 
-    	    	}
-    	     }
+    		if((vm.getUserId()==userId) && (vm.getId()==vmId)){
+    	    	 host= hoster.get(vm);  	    	 
+    	    }
+    	}
 		return host;
     }
 }
