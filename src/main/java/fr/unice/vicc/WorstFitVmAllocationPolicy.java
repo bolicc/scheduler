@@ -6,8 +6,11 @@ import org.cloudbus.cloudsim.Vm;
 import org.cloudbus.cloudsim.VmAllocationPolicy;
 import org.cloudbus.cloudsim.core.CloudSim;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +22,7 @@ import java.util.Map;
 public class WorstFitVmAllocationPolicy extends VmAllocationPolicy {
     /** The map to track the server that host each running VM. */
     private Map<Vm,Host> hoster;
-    private Map<Double,Host> available;
+    private Map<Host,Double> available;
     
     public WorstFitVmAllocationPolicy(List<? extends Host> list) {
         super(list);
@@ -44,18 +47,22 @@ public class WorstFitVmAllocationPolicy extends VmAllocationPolicy {
     	if (hoster.containsKey(vm))
     		return true;
     	for (Host h : getHostList()){
-    		double mip = h.getAvailableMips();		
-    		int ram = h.getRamProvisioner().getAvailableRam();
-    		double metric = mip*ram;
-    		available.put(metric,h);
+    		Double mip = h.getAvailableMips();		
+    		Integer ram = h.getRamProvisioner().getAvailableRam();
+    		Double metric = mip*ram;
+//    		available.put(metric,h);//
+    		available.put(h,metric);
     	}
-    	Object[] key = available.keySet().toArray();
-		Arrays.sort(key);
-    	for (int j=key.length-1;j>=0;j--) {
-    		Host host = available.get(key[j]);
-    		if(allocateHostForVm(vm, host)) 
-    			return true;	
-    	}
+    	
+    	List<Map.Entry<Host,Double>> list=new ArrayList<>();  
+        list.addAll(available.entrySet());  
+        DescendingComparator comparator = new DescendingComparator();  
+        Collections.sort(list,comparator); 
+        for(Iterator<Map.Entry<Host,Double>> it = list.iterator();it.hasNext();){
+        	Host host = it.next().getKey();
+     		if(allocateHostForVm(vm, host)) 
+     			return true;
+        }
     	return false;
     }
     	
@@ -93,4 +100,12 @@ public class WorstFitVmAllocationPolicy extends VmAllocationPolicy {
     	}
 		return host;
     }
+    
+    private static class DescendingComparator implements Comparator<Map.Entry<Host,Double>>  
+    {  
+        public int compare(Map.Entry<Host,Double> mp1,Map.Entry<Host,Double> mp2)  
+        {  
+            return (int) (mp2.getValue() - mp1.getValue());  // descending order
+        }  
+    }  
 }

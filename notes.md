@@ -18,6 +18,10 @@ No SLA violations means no penalties. To allocate a certain VM, we need to consi
 
 ### Energy-efficient schedulers
 
+### Greedy scheduler
+Revenue  = Incomes - Penalties - Energy
+As incomes are fixed, to maximize revenue, penalties and energy costs should be minimized. It is then important to provide a good trade-off between energy savings and penalties for SLA violation.  
+
 
 ### Results
 Test different schedulers running on `all` day, the results are as follow.
@@ -27,8 +31,8 @@ Test different schedulers running on `all` day, the results are as follow.
 	Naive           | 12398.59€ | 402.16€	| 2645.63€ | 9350.80€
 	AntiAffinity    |           |           |          |
 	NextFit         |           |           |          |
-	WorstFit	    | 12398.59€ | 6.06€	    | 3288.96€ | 9103.58€
+	WorstFit	    | 12398.59€ | 6.06€	    | 3286.62€ | 9105.92€
 	NoViolations    | 12398.59€ | 0.00€	    | 2868.74€ | 9529.85€
-	EnergyEfficient |           |           |          |
+	Energy          | 12398.59€ | 1413.50€  | 2604.30€ | 8380.79€
 	
 	
