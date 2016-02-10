@@ -1,0 +1,66 @@
+Day 20110303
+Initialising...
+Incomes:    1317.67€
+Penalties:  3.27€
+Energy:     266.53€
+Revenue:    1047.86€
+
+Day 20110306
+Incomes:    949.85€
+Penalties:  0.23€
+Energy:     233.68€
+Revenue:    715.94€
+
+Day 20110309
+Incomes:    700.27€
+Penalties:  3.13€
+Energy:     254.96€
+Revenue:    442.19€
+
+Day 20110322
+Incomes:    1461.02€
+Penalties:  16.66€
+Energy:     293.19€
+Revenue:    1151.18€
+
+Day 20110325
+Incomes:    1250.28€
+Penalties:  27.83€
+Energy:     265.00€
+Revenue:    957.45€
+
+Day 20110403
+Incomes:    1749.31€
+Penalties:  115.02€
+Energy:     306.62€
+Revenue:    1327.67€
+
+Day 20110409
+Incomes:    1371.14€
+Penalties:  0.53€
+Energy:     287.22€
+Revenue:    1083.40€
+
+Day 20110411
+Incomes:    1385.64€
+Penalties:  0.06€
+Energy:     272.67€
+Revenue:    1112.91€
+
+Day 20110412
+Incomes:    1218.62€
+Penalties:  33.40€
+Energy:     258.99€
+Revenue:    926.24€
+
+Day 20110420
+Incomes:    994.78€
+Penalties:  0.82€
+Energy:     249.58€
+Revenue:    744.37€
+
+hop
+Incomes:    12398.59€
+Penalties:  200.95€
+Energy:     2688.44€
+Revenue:    9509.21€
