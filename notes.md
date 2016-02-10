@@ -37,22 +37,30 @@ When a VM is coming, the algorithm scans each host of hostlist and finds the fir
 
 All VMs with an id between [0-99] must be on distinct nodes, the same with VMs having an id between [100-199], [200-299]
 
-* For each host in the hostlist, we check if there are already VMs on it. 
+1.  
+
+For each host in the hostlist, we check if there are already VMs on it. 
 If not, we check directly if this host can allocate resources to the VM and put the VM on its list.
  
 If there are already VMs on this host, we need to get its vmlist and compare if the incoming VM has the same id interval as the existing ones with the help of the method `isSame()`. If it's the same, we move to next host and do the same. If it's different from all other VM's id interval in the vmlist, we will allocate this VM on this host.
 
-* Complexity = O(mn), where
+2.
+
+Complexity = O(mn), where
 
 m: number of all existing VMs on a host
+
 n: number of all hosts
 
+3. 
 
-* Such an antiAffinity algorithm requires huge cluster hosting capacity. For example, for VM id between [0-99], it needs at least 100 hosts to load these VMs, while in Affinity algorithm, fewer hosts will be needed. However, In good aspects, antiAffinity  algorithm enhances fault tolerance.  
+Such an antiAffinity algorithm requires huge cluster hosting capacity. For example, for VM id between [0-99], it needs at least 100 hosts to load these VMs, while in Affinity algorithm, fewer hosts will be needed. However, In good aspects, antiAffinity  algorithm enhances fault tolerance.  
 
 ### Balance the load
 
-1. Next fit: this algorithm is similar to the naive one. The only difference is that naive algorithm each time will go through the hostlist from the very beginning while next fit algorithm will start from the next host after the host used to allocate last time.
+1. 
+
+Next fit: this algorithm is similar to the naive one. The only difference is that naive algorithm each time will go through the hostlist from the very beginning while next fit algorithm will start from the next host after the host used to allocate last time.
 
 Basically, we define a private static variable i to store current hostId. The trick here is to set i to 0 after we finish going through the whole list so that we can achieve to loop the hostlist. Otherwise, it's only one-time searching through hostlist, which is not correct.
 
@@ -62,13 +70,18 @@ Naive penalties: 402.16€
 
 We can observe that NextFit has fewer penalties with regards to the Naive scheduler.
 
-2. To develop scheduler with `worst fit algorithm`, we set the metric as MIPS*RAM, which reveals the resources the host has. When allocating a VM to a host, always choose the host with max{MIPS*RAM}.
+2. 
+
+To develop scheduler with `worst fit algorithm`, we set the metric as MIPS x RAM, which reveals the resources the host has. When allocating a VM to a host, always choose the host with max{MIPS*RAM}.
  
 Here, MIPS stands for the speed of execution and RAM stands for memory. In any case, the more RAM is the better. Meanwhile, if MIPS is large, then it can release more space when handling the same task in the same time. So  max{MIPS*RAM} can stand for max resource of the host.
 
 Basically, we declare another Hashmap<Host,Double> available to store the metric of a host. And then sort it in a descending order by metric. After that, we try to put each VM to host following this order.
 
-3. WorstFit algorithm performs the best in terms of reducing the SLA violation.
+3. 
+
+WorstFit algorithm performs the best in terms of reducing the SLA violation.
+
 WorstFit penalties: 6.06€
 
 NextFit penalties: 360.59€
@@ -77,7 +90,9 @@ Penalties reveal SLA violation. It causes SLA violation when the associated VM i
 
 In worstFit algorithm, we start from the host with most resources, which decreases the possibilities that current host can't provide sufficient MIPS for incoming VMs. So penalties of this algorithm is relatively less than the nextFit algorithm.
 
-4. Complexity: nextFit(o(n)), worstFit(o(n)), where
+4. 
+
+Complexity: nextFit(o(n)), worstFit(o(n)), where
 
 n: number of all hosts
 
