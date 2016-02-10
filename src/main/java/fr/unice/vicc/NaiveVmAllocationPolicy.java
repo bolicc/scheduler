@@ -4,13 +4,10 @@ import org.cloudbus.cloudsim.Host;
 import org.cloudbus.cloudsim.Log;
 import org.cloudbus.cloudsim.Vm;
 import org.cloudbus.cloudsim.VmAllocationPolicy;
-import org.cloudbus.cloudsim.core.CloudSim;
-import org.cloudbus.cloudsim.power.PowerHost;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-//compile exec:java -Dsched=naive -Dday=all
 
 /**
  * Created by fhermeni2 on 16/11/2015.
@@ -40,11 +37,7 @@ public class NaiveVmAllocationPolicy extends VmAllocationPolicy {
     	if (hoster.containsKey(vm))
     		return true;
     	for (Host h : getHostList()){
-    		if (h.vmCreate(vm)){
-    			hoster.put(vm, h);
-    			Log.formatLine("%.4f: VM #" + vm.getId() + " has been allocated to the host#" + h.getId() + 
-    					" datacenter #" + h.getDatacenter().getId() + "(" + h.getDatacenter().getName() + ") #", 
-    					CloudSim.clock());
+    		if (allocateHostForVm(vm,h)){
     			return true;
     		}
     	}
@@ -55,9 +48,9 @@ public class NaiveVmAllocationPolicy extends VmAllocationPolicy {
     public boolean allocateHostForVm(Vm vm, Host host) {
     	if (host!=null && host.vmCreate(vm)){
     		hoster.put(vm, host);
-    		Log.formatLine("%.4f: VM #" + vm.getId() + " has been allocated to the host#" + host.getId() + 
+    		/*Log.formatLine("%.4f: VM #" + vm.getId() + " has been allocated to the host#" + host.getId() + 
 					" datacenter #" + host.getDatacenter().getId() + "(" + host.getDatacenter().getName() + ") #", 
-					CloudSim.clock());
+					CloudSim.clock());*/
     		return true;
     	}
         return false;
@@ -75,7 +68,7 @@ public class NaiveVmAllocationPolicy extends VmAllocationPolicy {
     }
 
     @Override
-    public Host getHost(int vmId, int userId) {//if id and userid of vm is the same to input
+    public Host getHost(int vmId, int userId) {
     	Host host = null;
     	for(Map.Entry<Vm, Host> entry : hoster.entrySet()){
     		Vm vm = entry.getKey();

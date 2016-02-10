@@ -5,14 +5,11 @@ import org.cloudbus.cloudsim.Log;
 import org.cloudbus.cloudsim.Vm;
 import org.cloudbus.cloudsim.VmAllocationPolicy;
 import org.cloudbus.cloudsim.core.CloudSim;
-import org.cloudbus.cloudsim.power.PowerHost;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-// need to be optimized???
 
 /** 
  * All Vms with an id between [0-99] must be on distinct nodes, 
@@ -43,7 +40,7 @@ public class AntiAffinityVmAllocationPolicy extends VmAllocationPolicy {
     	if (hoster.containsKey(vm))
     		return true;
     	boolean result = false;
-    	for (Host h: getHostList()){//list of host
+    	for (Host h : getHostList()){//list of host
     		if ((h.getVmList().size()>0)){// a specific host, get list of vm
     			int n = 0;		
     			for(Vm tempVm : h.getVmList()){//get each vm of this list		
@@ -51,26 +48,14 @@ public class AntiAffinityVmAllocationPolicy extends VmAllocationPolicy {
     				if(!result){
     					n = n+1;				
     				}
-    			}
-    			//System.out.println("n : " + n + " hostlist size : " + (h.getVmList().size()));
-    			if(n==h.getVmList().size() && h.vmCreate(vm)){		
-    				hoster.put(vm, h);
-					//System.out.println("host ID : " + h.getId() + " vm ID : " + vm.getId());
-    				Log.formatLine("%.4f: VM #" + vm.getId() + " has been allocated to the host#" + h.getId() + 
-    						" datacenter #" + h.getDatacenter().getId() + "(" + h.getDatacenter().getName() + ") #", 
-    						CloudSim.clock());
+    			}			
+    			if(n==h.getVmList().size() && allocateHostForVm(vm, h)){		
 					return true;
-    			}
+    			}			
+    		}
+    		else if(allocateHostForVm(vm, h))
+    			return true;//there is no vm on the host in the beginning, this is the first vm
     			
-    		}
-    		else if(h.vmCreate(vm)){//there is no vm on the host in the beginning, this is the first vm
-    			hoster.put(vm, h); 			
-    			//System.out.println("host ID : " + h.getId() + " vm ID : " + vm.getId());
-    			Log.formatLine("%.4f: VM #" + vm.getId() + " has been allocated to the host#" + h.getId() + 
-    					" datacenter #" + h.getDatacenter().getId() + "(" + h.getDatacenter().getName() + ") #", 
-    					CloudSim.clock());
-    			return true;
-    		}
     	}
     	return false;
     }
@@ -78,8 +63,7 @@ public class AntiAffinityVmAllocationPolicy extends VmAllocationPolicy {
     @Override
     public boolean allocateHostForVm(Vm vm, Host host) {
     	if (host!=null && host.vmCreate(vm)){
-    		hoster.put(vm, host);
-    		//System.out.println("host ID : " + host.getId() + " vm ID : " + vm.getId());
+    		hoster.put(vm, host);   		
     		Log.formatLine("%.4f: VM #" + vm.getId() + " has been allocated to the host#" + host.getId() + 
 					" datacenter #" + host.getDatacenter().getId() + "(" + host.getDatacenter().getName() + ") #", 
 					CloudSim.clock());
@@ -109,8 +93,7 @@ public class AntiAffinityVmAllocationPolicy extends VmAllocationPolicy {
 
     @Override
     public Host getHost(Vm vm) {
-    	return hoster.get(vm);
-    	  	
+    	return hoster.get(vm);  	  	
     }
 
     @Override

@@ -5,20 +5,15 @@ import org.cloudbus.cloudsim.Log;
 import org.cloudbus.cloudsim.Vm;
 import org.cloudbus.cloudsim.VmAllocationPolicy;
 import org.cloudbus.cloudsim.core.CloudSim;
-import org.cloudbus.cloudsim.power.PowerHost;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-//compile exec:java -Dsched=nextFit -Dday=all
 
-/**
- * Created by fhermeni2 on 16/11/2015.
- */
 public class NextFitVmAllocationPolicy extends VmAllocationPolicy {
     /** The map to track the server that host each running VM. */
     private Map<Vm,Host> hoster;
-    public static int i = 0; 
+    private static int i = 0; 
 
     public NextFitVmAllocationPolicy(List<? extends Host> list) {
         super(list);
@@ -40,23 +35,13 @@ public class NextFitVmAllocationPolicy extends VmAllocationPolicy {
     public boolean allocateHostForVm(Vm vm) { 
     	if (hoster.containsKey(vm))
     		return true;
-    	//int i=0;
     	
     	while(i<(getHostList().size())){//list of hosts
-    		//System.out.println("last host"+i);
-    		if(i==(getHostList().size()-1)){
-        		i=0;
+    		if(i == (getHostList().size()-1)){
+        		i = 0;
         	}
-    		Host h = getHostList().get(i);
-    		
-    		//System.out.println("i value"+i+"host ID"+h.getId());
-    		if (h!=null && h.vmCreate(vm)){
-    			hoster.put(vm, h);
-    			//System.out.println("host ID : " + h.getId() + " vm ID : " + vm.getId());
-    			//System.out.println("    current search host"+i);
-    			Log.formatLine("%.4f: VM #" + vm.getId() + " has been allocated to the host#" + h.getId() + 
-    					" datacenter #" + h.getDatacenter().getId() + "(" + h.getDatacenter().getName() + ") #", 
-    					CloudSim.clock());
+    		Host h = getHostList().get(i);	
+    		if (allocateHostForVm(vm,h)){
     			return true;  			
     		}   		
     		else{
@@ -70,7 +55,6 @@ public class NextFitVmAllocationPolicy extends VmAllocationPolicy {
     public boolean allocateHostForVm(Vm vm, Host host) {
     	if (host!=null && host.vmCreate(vm)){
     		hoster.put(vm, host);
-    		//System.out.println("host ID : " + host.getId() + " vm ID : " + vm.getId());
     		Log.formatLine("%.4f: VM #" + vm.getId() + " has been allocated to the host#" + host.getId() + 
 					" datacenter #" + host.getDatacenter().getId() + "(" + host.getDatacenter().getName() + ") #", 
 					CloudSim.clock());

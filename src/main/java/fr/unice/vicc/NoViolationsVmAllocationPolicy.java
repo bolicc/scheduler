@@ -6,14 +6,11 @@ import org.cloudbus.cloudsim.Pe;
 import org.cloudbus.cloudsim.Vm;
 import org.cloudbus.cloudsim.VmAllocationPolicy;
 import org.cloudbus.cloudsim.core.CloudSim;
-import org.cloudbus.cloudsim.power.PowerHost;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-//compile exec:java -Dsched=noViolations -Dday=all
+
 //mips of host >= requst of mips request of vms in this host
 
 public class NoViolationsVmAllocationPolicy extends VmAllocationPolicy {

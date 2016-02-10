@@ -50,7 +50,6 @@ public class WorstFitVmAllocationPolicy extends VmAllocationPolicy {
     		Double mip = h.getAvailableMips();		
     		Integer ram = h.getRamProvisioner().getAvailableRam();
     		Double metric = mip*ram;
-//    		available.put(metric,h);//
     		available.put(h,metric);
     	}
     	
