@@ -13,7 +13,7 @@ import java.util.Map;
 public class NextFitVmAllocationPolicy extends VmAllocationPolicy {
     /** The map to track the server that host each running VM. */
     private Map<Vm,Host> hoster;
-    private static int i = 0; 
+    private static int i = 0; //current host id
 
     public NextFitVmAllocationPolicy(List<? extends Host> list) {
         super(list);

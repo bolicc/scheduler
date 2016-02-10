@@ -54,11 +54,17 @@ public class AntiAffinityVmAllocationPolicy extends VmAllocationPolicy {
     			}			
     		}
     		else if(allocateHostForVm(vm, h))
-    			return true;//there is no vm on the host in the beginning, this is the first vm
-    			
+    			return true;//there is no vm on the host in the beginning, this is the first vm 			
     	}
     	return false;
     }
+    
+	public boolean isSame(Vm vm1, Vm vm2){	
+		if((int)(vm1.getId()/100) == (int)(vm2.getId()/100))
+			return true;
+		else 
+			return false;
+	}
     	
     @Override
     public boolean allocateHostForVm(Vm vm, Host host) {
@@ -71,19 +77,6 @@ public class AntiAffinityVmAllocationPolicy extends VmAllocationPolicy {
     	}
         return false;
     }
-    
-    public int vmSort(int vmId){
-    	int sort = vmId/100;
-    	sort = sort*100;
-    	return sort;	
-    }
-    
-	public boolean isSame(Vm vm1, Vm vm2){	
-		if(vmSort(vm1.getId()) == vmSort(vm2.getId()))
-			return true;
-		else 
-			return false;
-	}
 
     @Override
     public void deallocateHostForVm(Vm vm) {
